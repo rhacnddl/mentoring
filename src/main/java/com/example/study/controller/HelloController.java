@@ -10,4 +10,9 @@ public class HelloController {
     public String hello() {
         return "hello spring";
     }
+
+    @GetMapping("pr")
+    public String prTest() {
+        return "pr test";
+    }
 }
