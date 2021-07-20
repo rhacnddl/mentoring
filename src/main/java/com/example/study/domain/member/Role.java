@@ -1,7 +1,6 @@
 package com.example.study.domain.member;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,18 +9,18 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "member")
-public class Member {
+@Table(name = "role")
+public class Role {
 
     @Id
-    @Column(name = "member_id")
+    @Column(name = "role_id")
     @GeneratedValue
     private Long id;
-    private String name;
-    private Integer age;
 
-    public Member(String name, Integer age) {
+    @Column(unique = true)
+    private String name;
+
+    public Role(String name) {
         this.name = name;
-        this.age = age;
     }
 }
