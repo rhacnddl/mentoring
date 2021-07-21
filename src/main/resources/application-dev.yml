@@ -1,7 +1,7 @@
-server:
-    port: 8081
-spring:
-    config:
-        import:
+#server:
+    #port: 8081
+#spring:
+    #config:
+        #import:
             config/application-h2.yml,
             config/application-dev-jpa.yml
