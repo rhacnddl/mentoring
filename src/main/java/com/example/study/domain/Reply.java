@@ -22,7 +22,7 @@ public class Reply {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "BOARD_ID")
     private Board board;
 
     @Column(name = "REG_DATE")

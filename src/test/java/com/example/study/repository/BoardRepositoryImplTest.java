@@ -34,13 +34,13 @@ class BoardRepositoryImplTest {
     }
 
     @Test
-    @Transactional
-    @Rollback(value = false)
+    //@Transactional
+    //@Rollback(false)
     void save() {
 
         //given
         Board board = Board.builder()
-                .content("test_1")
+                .content("No Annotations")
                 .writer("admin")
                 .regDate(LocalDateTime.now())
                 .build();
