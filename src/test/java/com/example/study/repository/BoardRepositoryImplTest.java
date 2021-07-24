@@ -1,7 +1,8 @@
 package com.example.study.repository;
 
 import com.example.study.domain.Board;
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -16,26 +20,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
+@Transactional
+@Rollback(false)
 class BoardRepositoryImplTest {
 
     @Autowired BoardRepository repository;
 
+    @DisplayName("Read Board")
     @Test
     void findById() {
         //given
-        Long id = 5L;
+        Board sample = Board.builder().content("Just sample").build();
+        Long id = repository.save(sample);
 
         //when
         Optional<Board> find = repository.findById(id);
         Board board = find.get();
 
         //then
-        Assertions.assertThat(board.getId()).isEqualTo(id);
+        assertThat(board.getId()).isEqualTo(id);
     }
 
+    @DisplayName("Save Board")
     @Test
-    //@Transactional
-    //@Rollback(false)
     void save() {
 
         //given
@@ -48,23 +55,23 @@ class BoardRepositoryImplTest {
         Long id = repository.save(board);
 
         //then
-        Assertions.assertThat(id).isEqualTo(board.getId());
+        assertThat(id).isEqualTo(board.getId());
     }
 
+    @DisplayName("Delete Board")
     @Test
-    @Transactional
-    @Rollback(value = false) //@Rollback(value = false)를 안해주면 이후 쿼리가 안나간다. 이유는?
     void delete() {
 
         //given
-        Board target = repository.findById(5L).get();
+        Board sample = Board.builder().content("Just sample").build();
+        Long boardId = repository.save(sample);
 
         //when
-        Long resultId = repository.delete(target);
+        Long resultId = repository.delete(sample);
 
         Optional<Board> find = repository.findById(resultId);
 
         //then
-        Assertions.assertThat(find.isEmpty()).isEqualTo(true);
+        assertThat(find.isEmpty()).isEqualTo(true);
     }
 }

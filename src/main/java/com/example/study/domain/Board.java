@@ -4,13 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "BOARD")
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "replies")
 @Builder
 public class Board {
 
@@ -29,4 +31,7 @@ public class Board {
     @Column(name = "UPDATE_DATE")
     private LocalDateTime updateDate;
 
+    //양방향 연관관계 매핑
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<Reply> replies = new ArrayList<>();
 }
